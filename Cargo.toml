@@ -1,0 +1,18 @@
+[package]
+name = "coin_rush"
+version = "0.1.0"
+edition = "2021"
+authors = ["Fares Alashkar <fares.ashkar77@gmail.com>"]
+description = "A simple game made with Rust and SDL2"
+readme = "README.md"
+
+
+[dependencies]
+# sdl2 = { version = "^0.37", features = ["ttf", "image", "static-link", "use-vcpkg"] }
+specs = "^0.17"
+specs-derive = "^0.4"
+rand = "^0.8"
+
+[dependencies.sdl2]
+version = "0.37.0"
+features = ["ttf", "image", "gfx", "mixer", "static-link", "use-vcpkg"]
