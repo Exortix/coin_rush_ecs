@@ -1,4 +1,4 @@
-use crate::components::{Coin, Enemy, Position, PowerUp};
+use crate::components::{BoundingBox, Coin, Collidable, Enemy, Position, PowerUp};
 use rand::Rng;
 use specs::*;
 
@@ -26,6 +26,8 @@ impl<'a> System<'a> for SpawnSystem {
     type SystemData = (
         Entities<'a>,
         WriteStorage<'a, Position>,
+        WriteStorage<'a, BoundingBox>,
+        WriteStorage<'a, Collidable>,
         WriteStorage<'a, Coin>,
         WriteStorage<'a, Enemy>,
         WriteStorage<'a, PowerUp>,
@@ -33,7 +35,15 @@ impl<'a> System<'a> for SpawnSystem {
 
     fn run(
         &mut self,
-        (entities, mut positions, mut coins, mut enemies, mut powerups): Self::SystemData,
+        (
+            entities,
+            mut positions,
+            mut bounding_boxes,
+            mut collidables,
+            mut coins,
+            mut enemies,
+            mut powerups,
+        ): Self::SystemData,
     ) {
         self.coin_timer += 0.1;
         self.enemy_timer += 0.1;
@@ -53,6 +63,16 @@ impl<'a> System<'a> for SpawnSystem {
                     },
                 )
                 .unwrap();
+            bounding_boxes
+                .insert(
+                    coin,
+                    BoundingBox {
+                        width: 10.0,
+                        height: 10.0,
+                    },
+                )
+                .unwrap();
+            collidables.insert(coin, Collidable).unwrap();
             coins.insert(coin, Coin).unwrap();
         }
 
@@ -68,6 +88,16 @@ impl<'a> System<'a> for SpawnSystem {
                     },
                 )
                 .unwrap();
+            bounding_boxes
+                .insert(
+                    enemy,
+                    BoundingBox {
+                        width: 20.0,
+                        height: 20.0,
+                    },
+                )
+                .unwrap();
+            collidables.insert(enemy, Collidable).unwrap();
             enemies.insert(enemy, Enemy).unwrap();
         }
 
@@ -83,6 +113,16 @@ impl<'a> System<'a> for SpawnSystem {
                     },
                 )
                 .unwrap();
+            bounding_boxes
+                .insert(
+                    powerup,
+                    BoundingBox {
+                        width: 10.0,
+                        height: 10.0,
+                    },
+                )
+                .unwrap();
+            collidables.insert(powerup, Collidable).unwrap();
             powerups
                 .insert(
                     powerup,

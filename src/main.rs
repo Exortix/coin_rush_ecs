@@ -23,7 +23,7 @@ fn main() -> Result<(), String> {
     // ECS World Setup
     let mut world = World::new();
     components::register_components(&mut world);
-    world.insert(resources::InputResource::default());
+    resources::register_resources(&mut world);
 
     // Create Entities
     entities::create_player(&mut world);
@@ -36,6 +36,7 @@ fn main() -> Result<(), String> {
     };
     let mut player_input_system = systems::PlayerInputSystem;
     let mut physics_system = systems::PhysicsSystem;
+    let mut collision_system = systems::CollisionSystem;
     let mut spawn_system = systems::SpawnSystem::new(800, 600);
 
     // Game Loop
@@ -62,6 +63,7 @@ fn main() -> Result<(), String> {
         physics_system.run_now(&world);
         spawn_system.run_now(&world);
         render_system.run_now(&world);
+        collision_system.run_now(&world);
 
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
     }

@@ -47,7 +47,20 @@ pub struct Obstacle;
 #[storage(VecStorage)]
 pub struct PowerUp {
     pub power_type: String,
+    // pub value: u32,
+    // pub duration: u32,
 }
+
+#[derive(Component, Debug)]
+#[storage(VecStorage)]
+pub struct BoundingBox {
+    pub width: f32,
+    pub height: f32,
+}
+
+#[derive(Component, Debug, Default)]
+#[storage(NullStorage)]
+pub struct Collidable;
 
 // Helper function to register all components
 pub fn register_components(world: &mut World) {
@@ -60,4 +73,6 @@ pub fn register_components(world: &mut World) {
     world.register::<Enemy>();
     world.register::<Obstacle>();
     world.register::<PowerUp>();
+    world.register::<BoundingBox>();
+    world.register::<Collidable>();
 }
