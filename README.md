@@ -1,7 +1,7 @@
 
 ---
 
-# **Rust ECS Game Documentation**
+# **Rust ECS Game Documentation (Work in progress)**
 
 ## **Overview**
 A simple 2D game using SDL2 and Specs ECS framework. Features player movement, entity spawning, and basic rendering.
